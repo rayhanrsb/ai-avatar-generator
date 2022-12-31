@@ -1,36 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Avatar Generator
 
-## Getting Started
+This project uses [DreamBooth](https://dreambooth.github.io/) to train [Stable Diffusion](https://stablediffusionweb.com/) on a particular subject (like a person), so as to be able to generate unique, high-quality images of that subject in various settings. Just like Lensa or Avatar AI, it can be used to generate awesome avatars of yourself.
 
-First, run the development server:
+It uses [replicate](https://replicate.com/) for cost efficiency.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+The current flow is as follows:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- The code in ```pages/api/training/index.ts``` takes images supplied by the user and configures training parameters for the model. It then initiates training the Stable Diffusion model.
+- The code in ```pages/api/training/[id].ts``` checks that the training is complete, and if it is, it returns the id (version) of the custom trained model.
+- The code in ```pages/api/predictions/index.ts``` takes the id (version) of the custom model and submits a user-supplied prompt to generate content. This allows the user to use the custom model to generate whatever content they want with their avatars.
+- The code in ```pages/api/predictions/[id].ts``` fetches the generated content and delivers it to the front-end.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Progress
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+The backed is complete, capable of training a custom model and obtaining custom generated content from it.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The front-end is pending.
